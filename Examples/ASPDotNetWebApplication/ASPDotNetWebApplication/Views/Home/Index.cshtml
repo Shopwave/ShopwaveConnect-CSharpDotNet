@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "PAGE TITLE";
+}
+
+<div class="jumbotron" style="margin:0px auto; text-align:center; background:#ffffff;">
+    <h1>YOUR APP LOGO</h1>
+
+    
+        @if (!ViewBag.LoggedIn)
+        {
+            <p class="lead">Click to login with Shopwave.</p>
+
+            <form action="/Home/RedirectAuth" method="post">
+                <input type="image" src="~/Content/LoginWithShopwaveSmall.png" width="134" />
+            </form>
+        }
+        else
+        {
+            <p class="lead">Logged in <a href="/Home/Logout" class="btn btn-success btn-sm">Logout</a></p>
+            
+            <ul style="list-style:none">
+                <li><strong>Name: </strong>@ViewBag.User.firstName @ViewBag.user.lastName</li>
+                <li><strong>MerchantId: </strong>@ViewBag.User.employee.merchantId</li>
+            </ul>
+        }
+   
+    
+    
+</div>
+
