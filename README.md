@@ -8,8 +8,8 @@ ShopwaveConnect-CSharpDotNet
 <p>Each of the following libraries must be included in your C# implementation file. An example of this can be found in <strong>Examples/ASPDotNetWebApplication/ASPDotNetWebApplication/Controllers/HomeController.cs</strong>.</p>
 
 ```C#
-ShopwaveConnect
-System.Web
+using ShopwaveConnect;
+using System.Web;
 ```
 
 <h2>Required Parameters</h2>
