@@ -8,7 +8,7 @@ ShopwaveConnect-CSharpDotNet
 <p>Each of the following libraries must be included in your C# implementation file. An example of this can be found in <strong>Examples/ASPDotNetWebApplication/ASPDotNetWebApplication/Controllers/HomeController.cs</strong>.</p>
 
 ```C#
-ShopwaveOAuthConnector
+ShopwaveConnect
 System.Web
 ```
 
