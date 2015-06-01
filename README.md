@@ -57,6 +57,6 @@ ShopwaveConnectManager.Token token = connector.MakeTokenCall();
 <h3>Make API Call</h3>
 
 ```C#
-connector.makeShopwaveApiCall("API_ENDPOINT", "OAUTH2_TOKEN", "METHOD", "HEADERS_DICTIONARY", "postBody={POST_BODY_JSON}")
+connector.makeShopwaveApiCall("API_ENDPOINT", "OAUTH2_TOKEN", "METHOD", "HEADERS_DICTIONARY", "{POST_BODY_JSON_String}")
 connector.makeShopwaveApiCall("user",(OAuth2.Token) Session["Token"], "GET", headers, null);
 ```
