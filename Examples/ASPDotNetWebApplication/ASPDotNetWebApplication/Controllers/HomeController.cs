@@ -82,9 +82,19 @@ namespace ASPDotNetWebApplication.Controllers
                     { "x-accept-version", "0.4"}
                 };
 
+
+
+                //Example Post
+                string categoryPostString = "{\"categories\":{\"3\":{\"title\":\"4 portion\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"3520\":{\"title\":\"Oreintal 2 P\",\"parentId\":null,\"activeDate\":\"2015-05-29T11:50:10\",\"id\":3520},\"14\":{\"title\":\"VAT lines\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"22\":{\"title\":\"Indian 2 P\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"27\":{\"title\":\"Party & Canapes\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"20\":{\"title\":\"1 P and Pots\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"15\":{\"title\":\"Pizza\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"12\":{\"title\":\"Olives\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"24\":{\"title\":\"Oriental 1 P\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"19\":{\"title\":\"Family\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"PKG\":{\"title\":\"Packaging\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"16\":{\"title\":\"Wine\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"2\":{\"title\":\"2 Portion\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"13\":{\"title\":\"Party Food\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"21\":{\"title\":\"Indian 1 P\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"0\":{\"title\":\"Not on Till\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"23\":{\"title\":\"Puddings\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"DRY\":{\"title\":\"Dry Goods\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"11\":{\"title\":\"Dry Goods\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"8\":{\"title\":\"Cakes & Tray\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"FRE\":{\"title\":\"Fresh Goods\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"},\"26\":{\"title\":\"Kids & Baby\",\"parentId\":null,\"activeDate\":\"2015-05-29T12:04:51\"}}}";
+
                 string responseString = connector.MakeShopwaveApiCall("user",(ShopwaveConnectManager.Token) Session["Token"], "GET", headers, null);
 
+
+                string categoryResponseString = connector.MakeShopwaveApiCall("category", (ShopwaveConnectManager.Token)Session["Token"], "POST", headers, categoryPostString);
+
                 UserGet userGet = new JavaScriptSerializer().Deserialize<UserGet>(responseString);
+
+                System.Diagnostics.Debug.WriteLine(categoryResponseString);
 
                 ViewBag.User = userGet.user;
             }

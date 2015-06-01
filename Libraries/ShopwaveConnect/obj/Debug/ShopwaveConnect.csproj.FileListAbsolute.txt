@@ -7,3 +7,8 @@ C:\Users\yasir.mahmood\Documents\ShopwaveConnect-CSharpDotNet\ShopwaveOAuthConne
 \\HQ\MM\UserData\yasir.mahmood\Desktop\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\bin\Debug\ShopwaveConnect.pdb
 \\HQ\MM\UserData\yasir.mahmood\Desktop\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\obj\Debug\ShopwaveConnect.dll
 \\HQ\MM\UserData\yasir.mahmood\Desktop\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\obj\Debug\ShopwaveConnect.pdb
+C:\Users\karthik\Documents\ShopwaveCSharpConnector\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\bin\Debug\ShopwaveConnect.dll
+C:\Users\karthik\Documents\ShopwaveCSharpConnector\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\bin\Debug\ShopwaveConnect.pdb
+C:\Users\karthik\Documents\ShopwaveCSharpConnector\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\obj\Debug\ShopwaveConnect.csprojResolveAssemblyReference.cache
+C:\Users\karthik\Documents\ShopwaveCSharpConnector\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\obj\Debug\ShopwaveConnect.dll
+C:\Users\karthik\Documents\ShopwaveCSharpConnector\ShopwaveConnect-CSharpDotNet\Libraries\ShopwaveConnect\obj\Debug\ShopwaveConnect.pdb

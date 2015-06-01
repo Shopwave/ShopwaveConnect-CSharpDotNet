@@ -8,6 +8,7 @@ using System.Net;
 using System.Diagnostics;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Collections.Specialized;
 
 namespace ShopwaveConnect
 {
@@ -58,21 +59,40 @@ namespace ShopwaveConnect
 
         public Token MakeTokenCall()
         {
-            String postData = "access_type=" + this.AccessType + "&redirect_uri=" + this.RedirectUrl.ToString() + "&client_id=" + this.ClientIdentifier + "&scope=" + string.Join(",", this.Scope) + "&client_secret=" + this.ClientSecret + "&code=" + this.AuthCode + "&grant_type=authorization_code";
-            
+            var postData = new NameValueCollection();
+            postData["access_type"] = this.AccessType;
+            postData["redirect_uri"] = this.RedirectUrl.ToString();
+            postData["client_id"] = this.ClientIdentifier;
+            postData["scope"] = string.Join(",", this.Scope);
+            postData["client_secret"] = this.ClientSecret;
+            postData["code"] = this.AuthCode;
+            postData["grant_type"] = "authorization_code";
+            //String postData = "access_type=" + this.AccessType + "&redirect_uri=" + this.RedirectUrl.ToString() + "&client_id=" + this.ClientIdentifier + "&scope=" + string.Join(",", this.Scope) + "&client_secret=" + this.ClientSecret + "&code=" + this.AuthCode + "&grant_type=authorization_code";
+
             return new JavaScriptSerializer().Deserialize<Token>(MakeWebQuery(GetTokenUri(), "POST", null, null, null, postData));
         }
 
         public Token RefreshTokenCall(Token tokenVar)
         {
-            String postData = "access_type=" + this.AccessType + "&redirect_uri=" + this.RedirectUrl.ToString() + "&client_id=" + this.ClientIdentifier + "&scope=" + string.Join(",", this.Scope) + "&client_secret=" + this.ClientSecret + "&refresh_token=" + tokenVar.refresh_token + "&grant_type=refresh_token";
+
+            var postData = new NameValueCollection();
+            postData["access_type"] = this.AccessType;
+            postData["redirect_uri"] = this.RedirectUrl.ToString();
+            postData["client_id"] = this.ClientIdentifier;
+            postData["scope"] = string.Join(",", this.Scope);
+            postData["client_secret"] = this.ClientSecret;
+            postData["refresh_token"] = tokenVar.refresh_token;
+            postData["grant_type"] = "refresh_token";
+            //String postData = "access_type=" + this.AccessType + "&redirect_uri=" + this.RedirectUrl.ToString() + "&client_id=" + this.ClientIdentifier + "&scope=" + string.Join(",", this.Scope) + "&client_secret=" + this.ClientSecret + "&refresh_token=" + tokenVar.refresh_token + "&grant_type=refresh_token";
 
             return new JavaScriptSerializer().Deserialize<Token>(MakeWebQuery(GetTokenUri(), "POST", null, null, null, postData));
         }
 
         public String MakeShopwaveApiCall(String endpoint, Token tokens, string method, Dictionary<string, string> headers, string postBody)
         {
-            return MakeWebQuery(GetApiEndpoint(endpoint), method, tokens.token_type, tokens.access_token, headers, postBody);
+            var postData = new NameValueCollection();
+            postData["postBody"] = postBody;
+            return MakeWebQuery(GetApiEndpoint(endpoint), method, tokens.token_type, tokens.access_token, headers, postData);
         }
 
         private Uri GetTokenUri()
@@ -85,51 +105,38 @@ namespace ShopwaveConnect
             return new Uri(ApiBaseUrl + endpoint);
         }
 
-        private string MakeWebQuery(Uri requestUrl, string method, string tokenType, string accessToken, Dictionary<string, string> headers, string postData)
+        private string MakeWebQuery(Uri requestUrl, string method, string tokenType, string accessToken, Dictionary<string, string> headers, NameValueCollection postData)
         {
-            WebRequest webRequest = WebRequest.Create(requestUrl);
-            webRequest.Method = method;
-            webRequest.Headers.Add("Accept-Tenant", "uk");
-            webRequest.Headers.Add("Accept-Language", "en-GB");
-            webRequest.Headers.Add("Accept-Charset", "utf-8");
+           
+            var wb = new WebClient();
 
-            if(headers != null)
+            if (headers != null)
             {
                 foreach (var headerPair in headers)
                 {
-                    webRequest.Headers.Add(headerPair.Key, headerPair.Value);
+                    wb.Headers.Set(headerPair.Key, headerPair.Value);
                 }
             }
 
             if (accessToken != null && tokenType != null)
             {
-                webRequest.Headers.Add("Authorization", tokenType + " " + accessToken);
+                wb.Headers.Set("Authorization", tokenType + " " + accessToken);
             }
 
-            Stream dataStream;
-            
-            if(method == "POST")
+            if (method == "POST" || method == "PUT")
             {
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData.ToString());
 
-                webRequest.ContentType = "application/x-www-form-urlencoded";
-                webRequest.ContentLength = byteArray.Length;
-
-                dataStream = webRequest.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
+                wb.Headers.Set("Content-type", "application/x-www-form-urlencoded");
+                var response = wb.UploadValues(requestUrl, method, postData);
+                string result = System.Text.Encoding.UTF8.GetString(response);
+                return result;
             }
-
-            WebResponse response = webRequest.GetResponse();
-            dataStream = response.GetResponseStream();
-
-            StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
-
-            reader.Close();
-            response.Close();
-
-            return responseFromServer;
+            else
+            {
+                var response = wb.DownloadString(requestUrl);
+                return response;
+            }
+            
         }
      }
 }
